@@ -5,7 +5,7 @@ dotEnvConfig({ path: join(process.cwd(), '.env') });
 
 const config = {
     PORT: process.env.PORT,
-    NODE_ENV: process.env.NODE_ENV,
+    NODE_ENV: process.env.NODE_ENV as 'development' | 'production',
     DB_URI: process.env.DB_URI,
     STUDENT_DEFAULT_PASSWORD: process.env.STUDENT_DEFAULT_PASSWORD,
     BCRYPT_SALT_ROUNDS: process.env.BCRYPT_SALT_ROUNDS,
