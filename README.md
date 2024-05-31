@@ -1,5 +1,5 @@
-### WhatToWatch
+### WhatToWatch (ON-GOING)
 
 ---
 
-A movie opinion site where you can share your true opinion about movies and also you can get a better recommendation of movies that you wanted watch on your weekends
+A movie review site where you can share your honest opinions about films and receive personalized recommendations for weekend viewing.
