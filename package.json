@@ -1,10 +1,10 @@
 {
-    "name": "imdb",
+    "name": "WhatToWatch",
     "version": "1.0.0",
     "main": "dist/src/server.js",
     "license": "MIT",
     "scripts": {
-        "build": "yarn tsc",
+        "build": "tsc",
         "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts",
         "start:prod": "node dist/src/server.js",
         "lint:check": "eslint .",

@@ -3,8 +3,6 @@ export type TUser = {
         firstName: string;
         lastName: string;
     };
-    email: string;
     password: string;
-    profileImg?: string;
-    contactNo: string;
+    role?: 'admin' | 'reviewer';
 };

@@ -8,7 +8,6 @@ const createUserValidationSchema = z.object({
                 .max(20, { message: 'First name should not exceed 20 characters.' }),
             lastName: z.string().max(20, { message: 'Last name should not exceed 20 characters.' }),
         }),
-        email: z.string().email(),
         password: z.string().min(6, 'Password must be at least 6 characters'),
         contactNo: z.string().max(11),
     }),
@@ -27,7 +26,6 @@ const updateUserValidationSchema = z.object({
                     .optional(),
             })
             .optional(),
-        email: z.string().email().optional(),
         contactNo: z.string().max(11).optional(),
     }),
 });
