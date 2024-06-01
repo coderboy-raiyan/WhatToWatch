@@ -1,38 +1,21 @@
 import { z } from 'zod';
+import AdminValidation from '../admin/admin.validation';
 
 const createUserValidationSchema = z.object({
     body: z.object({
-        name: z.object({
-            firstName: z
-                .string()
-                .max(20, { message: 'First name should not exceed 20 characters.' }),
-            lastName: z.string().max(20, { message: 'Last name should not exceed 20 characters.' }),
-        }),
         password: z.string().min(6, 'Password must be at least 6 characters'),
-        contactNo: z.string().max(11),
     }),
 });
-const updateUserValidationSchema = z.object({
+const createAdminValidationSchema = z.object({
     body: z.object({
-        name: z
-            .object({
-                firstName: z
-                    .string()
-                    .max(20, { message: 'First name should not exceed 20 characters.' })
-                    .optional(),
-                lastName: z
-                    .string()
-                    .max(20, { message: 'Last name should not exceed 20 characters.' })
-                    .optional(),
-            })
-            .optional(),
-        contactNo: z.string().max(11).optional(),
+        password: z.string().min(6, 'Password must be at least 6 characters').optional(),
+        admin: AdminValidation.createAdminValidationSchema,
     }),
 });
 
 const UserValidation = {
-    updateUserValidationSchema,
     createUserValidationSchema,
+    createAdminValidationSchema,
 };
 
 export default UserValidation;

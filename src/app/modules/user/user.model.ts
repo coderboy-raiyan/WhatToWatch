@@ -1,19 +1,10 @@
+import { hash } from 'bcrypt';
 import { Schema, model } from 'mongoose';
+import config from '../../config';
 import { TUser } from './user.interface';
 
 const userSchema = new Schema<TUser>(
     {
-        name: {
-            firstName: {
-                type: String,
-                required: true,
-            },
-            lastName: {
-                type: String,
-                required: true,
-            },
-        },
-
         password: {
             type: String,
             required: true,
@@ -24,6 +15,13 @@ const userSchema = new Schema<TUser>(
     },
     { timestamps: true }
 );
+
+userSchema.pre('save', async function (next) {
+    if (this.isModified('password')) {
+        this.password = await hash(this.password, Number(config.BCRYPT_SALT_ROUNDS));
+    }
+    next();
+});
 
 const User = model('User', userSchema);
 

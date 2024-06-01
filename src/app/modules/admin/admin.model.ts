@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import UserConstant from '../user/user.constant';
 import { TAdmin } from './admin.interface';
 
 const adminSchema = new Schema<TAdmin>(
@@ -7,6 +8,17 @@ const adminSchema = new Schema<TAdmin>(
             type: Schema.Types.ObjectId,
             ref: 'User',
             unique: true,
+            required: true,
+        },
+        name: {
+            firstName: {
+                type: String,
+                required: true,
+            },
+            lastName: {
+                type: String,
+                required: true,
+            },
         },
         email: {
             type: String,
@@ -24,6 +36,10 @@ const adminSchema = new Schema<TAdmin>(
         profileImg: {
             type: String,
             default: '',
+        },
+        role: {
+            type: String,
+            enum: UserConstant.UserRole,
         },
     },
     { timestamps: true }
