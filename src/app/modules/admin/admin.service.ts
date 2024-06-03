@@ -25,7 +25,7 @@ const createAdminToDB = async (payload: TAdmin & { password: string }) => {
         }
         delete payload.password;
 
-        const admin = { ...payload, role: 'admin', user: createdUser[0]._id };
+        const admin = { ...payload, user: createdUser[0]._id };
 
         const createdAdmin = await Admin.create([admin], { session });
 

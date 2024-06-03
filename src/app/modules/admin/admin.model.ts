@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import UserConstant from '../user/user.constant';
 import { TAdmin } from './admin.interface';
 
 const adminSchema = new Schema<TAdmin>(
@@ -36,10 +35,6 @@ const adminSchema = new Schema<TAdmin>(
         profileImg: {
             type: String,
             default: '',
-        },
-        role: {
-            type: String,
-            enum: UserConstant.UserRole,
         },
     },
     { timestamps: true }
