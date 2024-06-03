@@ -23,6 +23,15 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-const User = model('User', userSchema);
+userSchema.pre('find', async function (next) {
+    this.find(this.getQuery()).projection({ password: 0 });
+    next();
+});
+userSchema.pre('findOne', async function (next) {
+    this.find(this.getQuery()).projection({ password: 0 });
+    next();
+});
+
+const User = model<TUser>('User', userSchema);
 
 export default User;

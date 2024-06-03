@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import AuthRoutes from '../modules/auth/auth.route';
 import UserRoutes from '../modules/user/user.route';
 
 type IRoutes = {
@@ -12,6 +13,10 @@ const routes: IRoutes[] = [
     {
         path: '/users',
         route: UserRoutes,
+    },
+    {
+        path: '/auth',
+        route: AuthRoutes,
     },
 ];
 

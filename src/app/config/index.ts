@@ -9,6 +9,7 @@ const config = {
     DB_URI: process.env.DB_URI,
     DEFAULT_PASSWORD: process.env.DEFAULT_PASSWORD,
     BCRYPT_SALT_ROUNDS: process.env.BCRYPT_SALT_ROUNDS,
+    ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
 };
 
 export default config;

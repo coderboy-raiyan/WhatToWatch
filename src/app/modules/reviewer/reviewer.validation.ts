@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const updateAdminValidationSchema = z.object({
+const updateReviewerValidationSchema = z.object({
     body: z.object({
         name: z.object({
             firstName: z
@@ -17,10 +17,9 @@ const updateAdminValidationSchema = z.object({
     }),
 });
 
-const createAdminValidationSchema = z.object({
+const createReviewerValidationSchema = z.object({
     body: z.object({
         password: z.string().min(6, 'Password must be at least 6 characters').optional(),
-
         name: z.object({
             firstName: z
                 .string()
@@ -33,9 +32,9 @@ const createAdminValidationSchema = z.object({
     }),
 });
 
-const AdminValidation = {
-    updateAdminValidationSchema,
-    createAdminValidationSchema,
+const ReviewValidation = {
+    updateReviewerValidationSchema,
+    createReviewerValidationSchema,
 };
 
-export default AdminValidation;
+export default ReviewValidation;
