@@ -5,8 +5,8 @@ const getAllUsersFromDB = async () => {
     return result;
 };
 
-const UserService = {
+const UserServices = {
     getAllUsersFromDB,
 };
 
-export default UserService;
+export default UserServices;

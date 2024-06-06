@@ -61,7 +61,7 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
     }
 };
 
-const ReviewerService = {
+const ReviewerServices = {
     registerReviewerIntoDB,
 };
-export default ReviewerService;
+export default ReviewerServices;

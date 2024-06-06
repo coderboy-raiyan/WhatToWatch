@@ -32,9 +32,9 @@ const createReviewerValidationSchema = z.object({
     }),
 });
 
-const ReviewValidation = {
+const ReviewValidations = {
     updateReviewerValidationSchema,
     createReviewerValidationSchema,
 };
 
-export default ReviewValidation;
+export default ReviewValidations;

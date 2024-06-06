@@ -2,10 +2,10 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsyncError from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { TReviewer } from './reviewer.interface';
-import ReviewerService from './reviewer.service';
+import ReviewerServices from './reviewer.service';
 
 const registerReviewer = catchAsyncError(async (req, res) => {
-    const { accessToken, refreshToken, reviewer } = await ReviewerService.registerReviewerIntoDB(
+    const { accessToken, refreshToken, reviewer } = await ReviewerServices.registerReviewerIntoDB(
         req.body
     );
 
@@ -22,8 +22,8 @@ const registerReviewer = catchAsyncError(async (req, res) => {
     });
 });
 
-const ReviewerController = {
+const ReviewerControllers = {
     registerReviewer,
 };
 
-export default ReviewerController;
+export default ReviewerControllers;

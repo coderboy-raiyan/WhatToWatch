@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import validateRequest from '../../middlewares/validateRequest';
-import ReviewerController from '../reviewer/reviewer.controller';
-import ReviewValidation from '../reviewer/reviewer.validation';
+import ReviewerControllers from '../reviewer/reviewer.controller';
+import ReviewValidations from '../reviewer/reviewer.validation';
 
 const router = Router();
 
 router.post(
     '/register-reviewer',
-    validateRequest(ReviewValidation.createReviewerValidationSchema),
-    ReviewerController.registerReviewer
+    validateRequest(ReviewValidations.createReviewerValidationSchema),
+    ReviewerControllers.registerReviewer
 );
 
 const AuthRoutes = router;

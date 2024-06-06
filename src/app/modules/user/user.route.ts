@@ -1,17 +1,17 @@
 import { Router } from 'express';
 import validateRequest from '../../middlewares/validateRequest';
-import AdminController from '../admin/admin.controller';
-import AdminValidation from '../admin/admin.validation';
-import UserController from './user.controller';
+import AdminControllers from '../admin/admin.controller';
+import AdminValidations from '../admin/admin.validation';
+import UserControllers from './user.controller';
 
 const router = Router();
 
-router.get('/', UserController.getAllUsers);
+router.get('/', UserControllers.getAllUsers);
 
 router.post(
     '/create-admin',
-    validateRequest(AdminValidation.createAdminValidationSchema),
-    AdminController.createAdmin
+    validateRequest(AdminValidations.createAdminValidationSchema),
+    AdminControllers.createAdmin
 );
 
 const UserRoutes = router;

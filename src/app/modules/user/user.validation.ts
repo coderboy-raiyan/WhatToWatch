@@ -6,8 +6,8 @@ const createUserValidationSchema = z.object({
     }),
 });
 
-const UserValidation = {
+const UserValidations = {
     createUserValidationSchema,
 };
 
-export default UserValidation;
+export default UserValidations;

@@ -1,7 +1,7 @@
 const UserRole = ['admin', 'reviewer'];
 
-const UserConstant = {
+const UserConstants = {
     UserRole,
 };
 
-export default UserConstant;
+export default UserConstants;

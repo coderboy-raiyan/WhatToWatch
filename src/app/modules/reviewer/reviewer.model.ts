@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import UserConstant from '../user/user.constant';
+import UserConstants from '../user/user.constant';
 import { TReviewer } from './reviewer.interface';
 
 const reviewerSchema = new Schema<TReviewer>(
@@ -39,7 +39,7 @@ const reviewerSchema = new Schema<TReviewer>(
         },
         role: {
             type: String,
-            enum: UserConstant.UserRole,
+            enum: UserConstants.UserRole,
         },
     },
     { timestamps: true }

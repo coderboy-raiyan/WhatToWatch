@@ -44,7 +44,7 @@ const createAdminToDB = async (payload: TAdmin & { password: string }) => {
     }
 };
 
-const AdminService = {
+const AdminServices = {
     createAdminToDB,
 };
-export default AdminService;
+export default AdminServices;

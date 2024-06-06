@@ -33,9 +33,9 @@ const createAdminValidationSchema = z.object({
     }),
 });
 
-const AdminValidation = {
+const AdminValidations = {
     updateAdminValidationSchema,
     createAdminValidationSchema,
 };
 
-export default AdminValidation;
+export default AdminValidations;
