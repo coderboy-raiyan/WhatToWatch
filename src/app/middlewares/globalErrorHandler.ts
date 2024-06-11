@@ -3,8 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { ZodError } from 'zod';
 import config from '../config';
 import ApiError from '../errors/ApiError';
+import handleZodError from '../errors/handleZodError';
 import { TErrorSources } from '../interface/error';
 
 function globalErrorHandler(error: any, req: Request, res: Response, next: NextFunction) {
@@ -12,7 +14,12 @@ function globalErrorHandler(error: any, req: Request, res: Response, next: NextF
     let message = 'Something went wrong!';
     let errorSources: TErrorSources = [];
 
-    if (error instanceof ApiError) {
+    if (error instanceof ZodError) {
+        const modifiedError = handleZodError(error);
+        statusCode = modifiedError.statusCode;
+        message = modifiedError.message;
+        errorSources = modifiedError.errorSources;
+    } else if (error instanceof ApiError) {
         statusCode = error.statusCode;
         message = error.message;
         errorSources = [
