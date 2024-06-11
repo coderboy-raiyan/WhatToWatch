@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
 import UserConstants from '../user/user.constant';
-import { TReviewer } from './reviewer.interface';
+import { TReviewer, TReviewerModel } from './reviewer.interface';
 
-const reviewerSchema = new Schema<TReviewer>(
+const reviewerSchema = new Schema<TReviewer, TReviewerModel>(
     {
         user: {
             type: Schema.Types.ObjectId,
@@ -39,12 +39,17 @@ const reviewerSchema = new Schema<TReviewer>(
         },
         role: {
             type: String,
-            enum: UserConstants.UserRole,
+            enum: UserConstants.UserRoles,
         },
     },
     { timestamps: true }
 );
 
-const Reviewer = model<TReviewer>('Reviewer', reviewerSchema);
+reviewerSchema.statics.isReviewerExists = async function (email: string) {
+    const reviewer = await this.findOne({ email });
+    return reviewer;
+};
+
+const Reviewer = model<TReviewer, TReviewerModel>('Reviewer', reviewerSchema);
 
 export default Reviewer;

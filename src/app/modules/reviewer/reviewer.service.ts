@@ -1,13 +1,13 @@
 import { StatusCodes } from 'http-status-codes';
 import mongoose from 'mongoose';
 import ApiError from '../../errors/ApiError';
+import AuthUtils from '../auth/auth.utils';
 import User from '../user/user.model';
-import UserUtils from '../user/user.utils';
 import { TReviewer } from './reviewer.interface';
 import Reviewer from './reviewer.model';
 
 const registerReviewerIntoDB = async (payload: TReviewer & { password: string }) => {
-    const isExists = await Reviewer.findOne({ email: payload.email });
+    const isExists = await User.findOne({ email: payload.email });
     if (isExists) {
         throw new ApiError(StatusCodes.NOT_ACCEPTABLE, 'Already have an account. Please sign in!');
     }
@@ -17,9 +17,12 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
     try {
         session.startTransaction();
 
-        const createdUser = await User.create([{ role: 'reviewer', password: payload.password }], {
-            session,
-        });
+        const createdUser = await User.create(
+            [{ role: 'reviewer', email: payload.email, password: payload.password }],
+            {
+                session,
+            }
+        );
 
         if (!createdUser) {
             throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
@@ -32,15 +35,8 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
             throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
         }
 
-        const accessToken = UserUtils.generateAccessToken({
+        const accessToken = AuthUtils.generateAccessToken({
             _id: createdUser[0]?._id,
-            email: createdReviewer[0]?.email,
-            role: createdUser[0]?.role,
-        });
-
-        const refreshToken = UserUtils.generateRefreshToken({
-            _id: createdUser[0]?._id,
-            email: createdReviewer[0]?.email,
             role: createdUser[0]?.role,
         });
 
@@ -49,7 +45,6 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
 
         return {
             accessToken,
-            refreshToken,
             reviewer: createdReviewer[0],
         };
     } catch (error) {

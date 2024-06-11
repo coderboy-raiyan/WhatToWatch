@@ -1,7 +1,13 @@
-const UserRole = ['admin', 'reviewer'];
+const UserRoles = ['admin', 'reviewer'];
+
+const UserRolesEnum = {
+    admin: 'admin',
+    reviewer: 'reviewer',
+} as const;
 
 const UserConstants = {
-    UserRole,
+    UserRoles,
+    UserRolesEnum,
 };
 
 export default UserConstants;

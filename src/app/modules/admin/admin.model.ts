@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
-import { TAdmin } from './admin.interface';
+import { TAdmin, TAdminModel } from './admin.interface';
 
-const adminSchema = new Schema<TAdmin>(
+const adminSchema = new Schema<TAdmin, TAdminModel>(
     {
         user: {
             type: Schema.Types.ObjectId,
@@ -40,6 +40,11 @@ const adminSchema = new Schema<TAdmin>(
     { timestamps: true }
 );
 
-const Admin = model('Admin', adminSchema);
+adminSchema.statics.isAdminExists = async function (email: string) {
+    const reviewer = await this.findOne({ email });
+    return reviewer;
+};
+
+const Admin = model<TAdmin, TAdminModel>('Admin', adminSchema);
 
 export default Admin;

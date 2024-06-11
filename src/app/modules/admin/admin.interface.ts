@@ -1,4 +1,5 @@
-import { Types } from 'mongoose';
+/* eslint-disable no-unused-vars */
+import { Model, Types } from 'mongoose';
 
 export type TAdmin = {
     name: {
@@ -11,4 +12,7 @@ export type TAdmin = {
     address: string;
     email: string;
     role?: 'admin' | 'reviewer';
+};
+export type TAdminModel = Model<TAdmin> & {
+    isAdminExists(email: string): Promise<TAdmin>;
 };

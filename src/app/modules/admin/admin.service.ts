@@ -2,12 +2,13 @@ import { StatusCodes } from 'http-status-codes';
 import mongoose from 'mongoose';
 import config from '../../config';
 import ApiError from '../../errors/ApiError';
+import { TUser } from '../user/user.interface';
 import User from '../user/user.model';
 import { TAdmin } from './admin.interface';
 import Admin from './admin.model';
 
-const createAdminToDB = async (payload: TAdmin & { password: string }) => {
-    const isExists = await Admin.findOne({ email: payload.email });
+const createAdminToDB = async (payload: TAdmin & TUser) => {
+    const isExists = await User.findOne({ email: payload.email });
     if (isExists) {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Admin already exists!');
     }
@@ -18,12 +19,13 @@ const createAdminToDB = async (payload: TAdmin & { password: string }) => {
     try {
         session.startTransaction();
 
-        const createdUser = await User.create([{ password, role: 'admin' }], { session });
+        const createdUser = await User.create([{ password, role: 'admin', email: payload.email }], {
+            session,
+        });
 
         if (!createdUser) {
             throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create user!');
         }
-        delete payload.password;
 
         const admin = { ...payload, user: createdUser[0]._id };
 
