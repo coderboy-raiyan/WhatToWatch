@@ -1,12 +1,20 @@
 import jwt from 'jsonwebtoken';
 import config from '../../config';
 
-const generateToken = (payload: Record<string, unknown>, expiresIn: string = '1d') => {
-    return jwt.sign(payload, config.ACCESS_TOKEN_SECRET, { expiresIn });
+const generateAccessToken = (payload: Record<string, unknown>) => {
+    return jwt.sign(payload, config.JWT_ACCESS_SECRET, {
+        expiresIn: config.JWT_ACCESS_TOKEN_EXPIRES_IN,
+    });
+};
+const generateRefreshToken = (payload: Record<string, unknown>) => {
+    return jwt.sign(payload, config.JWT_REFRESH_SECRET, {
+        expiresIn: config.JWT_REFRESH_TOKEN_EXPIRES_IN,
+    });
 };
 
 const UserUtils = {
-    generateToken,
+    generateAccessToken,
+    generateRefreshToken,
 };
 
 export default UserUtils;

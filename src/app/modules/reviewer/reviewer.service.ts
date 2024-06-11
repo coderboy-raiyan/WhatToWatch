@@ -25,8 +25,6 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
             throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
         }
 
-        delete payload.password;
-
         const modifiedReviewer = { ...payload, user: createdUser[0]?._id };
 
         const createdReviewer = await Reviewer.create([modifiedReviewer], { session });
@@ -34,13 +32,13 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
             throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
         }
 
-        const accessToken = UserUtils.generateToken({
+        const accessToken = UserUtils.generateAccessToken({
             _id: createdUser[0]?._id,
             email: createdReviewer[0]?.email,
             role: createdUser[0]?.role,
         });
 
-        const refreshToken = UserUtils.generateToken({
+        const refreshToken = UserUtils.generateRefreshToken({
             _id: createdUser[0]?._id,
             email: createdReviewer[0]?.email,
             role: createdUser[0]?.role,

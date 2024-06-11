@@ -19,16 +19,14 @@ const updateReviewerValidationSchema = z.object({
 
 const createReviewerValidationSchema = z.object({
     body: z.object({
-        password: z.string().min(6, 'Password must be at least 6 characters').optional(),
+        password: z.string().min(6, 'Password must be at least 6 characters'),
         name: z.object({
             firstName: z
                 .string()
                 .max(20, { message: 'First name should not exceed 20 characters.' }),
             lastName: z.string().max(20, { message: 'Last name should not exceed 20 characters.' }),
         }),
-        address: z.string(),
         email: z.string(),
-        contactNo: z.string().max(11),
     }),
 });
 

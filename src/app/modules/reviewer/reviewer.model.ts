@@ -27,11 +27,11 @@ const reviewerSchema = new Schema<TReviewer>(
         },
         contactNo: {
             type: String,
-            required: true,
+            default: '',
         },
         address: {
             type: String,
-            required: true,
+            default: '',
         },
         profileImg: {
             type: String,
