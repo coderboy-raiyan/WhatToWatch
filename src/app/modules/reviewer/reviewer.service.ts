@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import mongoose from 'mongoose';
 import ApiError from '../../errors/ApiError';
-import AuthUtils from '../auth/auth.utils';
 import User from '../user/user.model';
 import { TReviewer } from './reviewer.interface';
 import Reviewer from './reviewer.model';
@@ -35,16 +34,10 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
             throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
         }
 
-        const accessToken = AuthUtils.generateAccessToken({
-            _id: createdUser[0]?._id,
-            role: createdUser[0]?.role,
-        });
-
         await session.commitTransaction();
         await session.endSession();
 
         return {
-            accessToken,
             reviewer: createdReviewer[0],
         };
     } catch (error) {
