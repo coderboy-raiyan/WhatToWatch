@@ -6,6 +6,8 @@ import { StatusCodes } from 'http-status-codes';
 import { ZodError } from 'zod';
 import config from '../config';
 import ApiError from '../errors/ApiError';
+import handleMongoDBCastError from '../errors/handleMongoDBCastError';
+import handleMongoDBDuplicateError from '../errors/handleMongoDbDuplicateError';
 import handleZodError from '../errors/handleZodError';
 import { TErrorSources } from '../interface/error';
 
@@ -16,6 +18,16 @@ function globalErrorHandler(error: any, req: Request, res: Response, next: NextF
 
     if (error instanceof ZodError) {
         const modifiedError = handleZodError(error);
+        statusCode = modifiedError.statusCode;
+        message = modifiedError.message;
+        errorSources = modifiedError.errorSources;
+    } else if (error?.name === 'CastError') {
+        const modifiedError = handleMongoDBCastError(error);
+        statusCode = modifiedError.statusCode;
+        message = modifiedError.message;
+        errorSources = modifiedError.errorSources;
+    } else if (error?.code === 11000) {
+        const modifiedError = handleMongoDBDuplicateError(error);
         statusCode = modifiedError.statusCode;
         message = modifiedError.message;
         errorSources = modifiedError.errorSources;

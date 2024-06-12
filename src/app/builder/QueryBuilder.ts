@@ -1,9 +1,9 @@
 import { FilterQuery, Model, Query } from 'mongoose';
 
-type TQueryModel<T> = Query<T[], T>;
+type TModelQueryChain<T> = Query<T[], T>;
 
 class QueryBuilder<T> {
-    public QueryModel: TQueryModel<T>;
+    public QueryModel: TModelQueryChain<T>;
     private query: Record<string, unknown>;
 
     constructor(QueryModel: Model<T>, query: Record<string, unknown>) {
