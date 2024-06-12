@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import AuthRoutes from '../modules/auth/auth.route';
+import MovieRoutes from '../modules/movie/movie.route';
 import UserRoutes from '../modules/user/user.route';
 
 type IRoutes = {
@@ -17,6 +18,10 @@ const routes: IRoutes[] = [
     {
         path: '/auth',
         route: AuthRoutes,
+    },
+    {
+        path: '/movies',
+        route: MovieRoutes,
     },
 ];
 
