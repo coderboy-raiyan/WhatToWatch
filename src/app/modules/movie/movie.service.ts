@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+import QueryBuilder from '../../builder/QueryBuilder';
 import ApiError from '../../errors/ApiError';
 import { TMovie } from './movie.interface';
 import Movie from './movie.model';
@@ -19,8 +20,14 @@ const createMovieIntoDB = async (payload: TMovie) => {
     return result;
 };
 
-const getAllMoviesFromDB = async () => {
-    const result = await Movie.find({});
+const getAllMoviesFromDB = async (query: Record<string, unknown>) => {
+    const MovieQueryModel = new QueryBuilder(Movie, query)
+        .search(['title', 'description', 'genre'])
+        .filter()
+        .paginate()
+        .sort()
+        .fields();
+    const result = await MovieQueryModel.QueryModel;
     return result;
 };
 

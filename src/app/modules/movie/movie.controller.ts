@@ -14,7 +14,7 @@ const createMovie = catchAsyncError(async (req: Request, res: Response) => {
     });
 });
 const getAllMovies = catchAsyncError(async (req: Request, res: Response) => {
-    const result = await MovieServices.getAllMoviesFromDB();
+    const result = await MovieServices.getAllMoviesFromDB(req.query);
     sendResponse(res, {
         success: true,
         statusCode: StatusCodes.OK,
