@@ -7,7 +7,8 @@ import { ZodError } from 'zod';
 import config from '../config';
 import ApiError from '../errors/ApiError';
 import handleMongoDBCastError from '../errors/handleMongoDBCastError';
-import handleMongoDBDuplicateError from '../errors/handleMongoDbDuplicateError';
+import handleMongoDBDuplicateError from '../errors/handleMongoDBDuplicateError';
+import handleMongooseValidationError from '../errors/handleMongooseValidationError';
 import handleZodError from '../errors/handleZodError';
 import { TErrorSources } from '../interface/error';
 
@@ -28,6 +29,11 @@ function globalErrorHandler(error: any, req: Request, res: Response, next: NextF
         errorSources = modifiedError.errorSources;
     } else if (error?.code === 11000) {
         const modifiedError = handleMongoDBDuplicateError(error);
+        statusCode = modifiedError.statusCode;
+        message = modifiedError.message;
+        errorSources = modifiedError.errorSources;
+    } else if (error?.name === 'ValidationError') {
+        const modifiedError = handleMongooseValidationError(error);
         statusCode = modifiedError.statusCode;
         message = modifiedError.message;
         errorSources = modifiedError.errorSources;
