@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import ApiError from '../../errors/ApiError';
+import AppError from '../../errors/ApiError';
 import Admin from '../admin/admin.model';
 import Reviewer from '../reviewer/reviewer.model';
 import User from '../user/user.model';
@@ -11,14 +11,14 @@ const loginUser = async (payload: TAuthLogin) => {
     const user = await User.isAdminExistsWithThisEmail(email);
 
     if (!user) {
-        throw new ApiError(
+        throw new AppError(
             StatusCodes.FORBIDDEN,
             "You haven't signed up yet. Please create an account!"
         );
     }
     const verifyPassword = await User.verifyPassword(payload.password, user.password);
     if (!verifyPassword) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, "Password did'nt matched!");
+        throw new AppError(StatusCodes.BAD_REQUEST, "Password did'nt matched!");
     }
 
     let userProfile;

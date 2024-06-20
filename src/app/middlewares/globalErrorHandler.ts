@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ZodError } from 'zod';
 import config from '../config';
-import ApiError from '../errors/ApiError';
+import AppError from '../errors/ApiError';
 import handleMongoDBCastError from '../errors/handleMongoDBCastError';
 import handleMongoDBDuplicateError from '../errors/handleMongoDBDuplicateError';
 import handleMongooseValidationError from '../errors/handleMongooseValidationError';
@@ -37,7 +37,7 @@ function globalErrorHandler(error: any, req: Request, res: Response, next: NextF
         statusCode = modifiedError.statusCode;
         message = modifiedError.message;
         errorSources = modifiedError.errorSources;
-    } else if (error instanceof ApiError) {
+    } else if (error instanceof AppError) {
         statusCode = error.statusCode;
         message = error.message;
         errorSources = [

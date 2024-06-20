@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import mongoose from 'mongoose';
 import config from '../../config';
-import ApiError from '../../errors/ApiError';
+import AppError from '../../errors/ApiError';
 import { TUser } from '../user/user.interface';
 import User from '../user/user.model';
 import { TAdmin } from './admin.interface';
@@ -10,7 +10,7 @@ import Admin from './admin.model';
 const createAdminToDB = async (payload: TAdmin & TUser) => {
     const isExists = await User.findOne({ email: payload.email });
     if (isExists) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'Admin already exists!');
+        throw new AppError(StatusCodes.BAD_REQUEST, 'Admin already exists!');
     }
     const password = payload?.password || config.DEFAULT_PASSWORD;
 
@@ -24,7 +24,7 @@ const createAdminToDB = async (payload: TAdmin & TUser) => {
         });
 
         if (!createdUser) {
-            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create user!');
+            throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create user!');
         }
 
         const admin = { ...payload, user: createdUser[0]._id };
@@ -32,7 +32,7 @@ const createAdminToDB = async (payload: TAdmin & TUser) => {
         const createdAdmin = await Admin.create([admin], { session });
 
         if (!createdAdmin) {
-            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create admin!');
+            throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create admin!');
         }
 
         await session.commitTransaction();

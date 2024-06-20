@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import QueryBuilder from '../../builder/QueryBuilder';
-import ApiError from '../../errors/ApiError';
+import AppError from '../../errors/ApiError';
 import { TMovie } from './movie.interface';
 import Movie from './movie.model';
 import MovieUtils from './movie.utils';
@@ -11,7 +11,7 @@ const createMovieIntoDB = async (payload: TMovie) => {
     const isMoviesExists = await Movie.findOne({ title });
 
     if (isMoviesExists) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'Movie already exists!');
+        throw new AppError(StatusCodes.BAD_REQUEST, 'Movie already exists!');
     }
     const generatedSlug = MovieUtils.generateMovieSlug(payload);
     payload.slug = generatedSlug;
@@ -40,13 +40,13 @@ const updateMovieIntoDB = async (id: string, payload: Partial<TMovie>) => {
     const { title, releaseDate, slug } = payload;
 
     if (slug) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'You cannot set slug directly!');
+        throw new AppError(StatusCodes.BAD_REQUEST, 'You cannot set slug directly!');
     }
 
     const movie = await Movie.findById(id);
 
     if (!movie) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'Movie already exists!');
+        throw new AppError(StatusCodes.BAD_REQUEST, 'Movie already exists!');
     }
 
     if (title || releaseDate) {

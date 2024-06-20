@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import AdminControllers from '../admin/admin.controller';
 import AdminValidations from '../admin/admin.validation';
@@ -10,6 +11,7 @@ router.get('/', UserControllers.getAllUsers);
 
 router.post(
     '/create-admin',
+    auth(['admin']),
     validateRequest(AdminValidations.createAdminValidationSchema),
     AdminControllers.createAdmin
 );

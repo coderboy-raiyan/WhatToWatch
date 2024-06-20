@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import mongoose from 'mongoose';
-import ApiError from '../../errors/ApiError';
+import AppError from '../../errors/ApiError';
 import User from '../user/user.model';
 import { TReviewer } from './reviewer.interface';
 import Reviewer from './reviewer.model';
@@ -8,7 +8,7 @@ import Reviewer from './reviewer.model';
 const registerReviewerIntoDB = async (payload: TReviewer & { password: string }) => {
     const isExists = await User.findOne({ email: payload.email });
     if (isExists) {
-        throw new ApiError(StatusCodes.NOT_ACCEPTABLE, 'Already have an account. Please sign in!');
+        throw new AppError(StatusCodes.NOT_ACCEPTABLE, 'Already have an account. Please sign in!');
     }
 
     const session = await mongoose.startSession();
@@ -24,14 +24,14 @@ const registerReviewerIntoDB = async (payload: TReviewer & { password: string })
         );
 
         if (!createdUser) {
-            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
+            throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
         }
 
         const modifiedReviewer = { ...payload, user: createdUser[0]?._id };
 
         const createdReviewer = await Reviewer.create([modifiedReviewer], { session });
         if (!createdReviewer) {
-            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
+            throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, 'Sign up failed!');
         }
 
         await session.commitTransaction();
