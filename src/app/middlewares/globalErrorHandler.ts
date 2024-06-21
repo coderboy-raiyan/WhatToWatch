@@ -5,7 +5,7 @@ import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { ZodError } from 'zod';
 import config from '../config';
-import AppError from '../errors/ApiError';
+import AppError from '../errors/AppError';
 import handleMongoDBCastError from '../errors/handleMongoDBCastError';
 import handleMongoDBDuplicateError from '../errors/handleMongoDBDuplicateError';
 import handleMongooseValidationError from '../errors/handleMongooseValidationError';

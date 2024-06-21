@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import QueryBuilder from '../../builder/QueryBuilder';
-import AppError from '../../errors/ApiError';
+import AppError from '../../errors/AppError';
 import { TMovie } from './movie.interface';
 import Movie from './movie.model';
 import MovieUtils from './movie.utils';

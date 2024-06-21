@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import mongoose from 'mongoose';
 import config from '../../config';
-import AppError from '../../errors/ApiError';
+import AppError from '../../errors/AppError';
 import { TUser } from '../user/user.interface';
 import User from '../user/user.model';
 import { TAdmin } from './admin.interface';

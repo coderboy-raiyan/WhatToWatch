@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import mongoose from 'mongoose';
-import AppError from '../../errors/ApiError';
+import AppError from '../../errors/AppError';
 import User from '../user/user.model';
 import { TReviewer } from './reviewer.interface';
 import Reviewer from './reviewer.model';

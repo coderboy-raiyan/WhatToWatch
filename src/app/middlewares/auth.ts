@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { JwtPayload, verify } from 'jsonwebtoken';
 import config from '../config';
-import AppError from '../errors/ApiError';
+import AppError from '../errors/AppError';
 import { TUserRoles } from '../modules/user/user.interface';
 import User from '../modules/user/user.model';
 import catchAsyncError from '../utils/catchAsync';
