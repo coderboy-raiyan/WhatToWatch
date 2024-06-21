@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import MovieControllers from './movie.controller';
 import MovieValidations from './movie.validation';
@@ -9,15 +10,17 @@ router.get('/', MovieControllers.getAllMovies);
 router.get('/:slug', MovieControllers.getSingleMovie);
 router.post(
     '/create-movie',
+    auth(['admin']),
     validateRequest(MovieValidations.createMovieValidationSchema),
     MovieControllers.createMovie
 );
 router.patch(
     '/update-movie/:id',
+    auth(['admin']),
     validateRequest(MovieValidations.updateMovieValidationSchema),
     MovieControllers.updateMovie
 );
-router.delete('/:id', MovieControllers.deleteMovie);
+router.delete('/:id', auth(['admin']), MovieControllers.deleteMovie);
 
 const MovieRoutes = router;
 

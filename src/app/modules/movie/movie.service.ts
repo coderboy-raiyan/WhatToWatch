@@ -6,9 +6,9 @@ import Movie from './movie.model';
 import MovieUtils from './movie.utils';
 
 const createMovieIntoDB = async (payload: TMovie) => {
-    const { title } = payload;
+    const { title, releaseDate } = payload;
 
-    const isMoviesExists = await Movie.findOne({ title });
+    const isMoviesExists = await Movie.findOne({ title, releaseDate });
 
     if (isMoviesExists) {
         throw new AppError(StatusCodes.BAD_REQUEST, 'Movie already exists!');

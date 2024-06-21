@@ -5,7 +5,6 @@ const movieSchema = new Schema<TMovie>({
     title: {
         type: String,
         required: true,
-        unique: true,
     },
     slug: {
         type: String,
