@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import AuthRoutes from '../modules/auth/auth.route';
+import GenreRoutes from '../modules/genre/genre.route';
 import MovieRoutes from '../modules/movie/movie.route';
 import UserRoutes from '../modules/user/user.route';
 
@@ -22,6 +23,10 @@ const routes: IRoutes[] = [
     {
         path: '/movies',
         route: MovieRoutes,
+    },
+    {
+        path: '/genres',
+        route: GenreRoutes,
     },
 ];
 

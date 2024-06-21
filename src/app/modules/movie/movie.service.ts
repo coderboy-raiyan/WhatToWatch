@@ -13,6 +13,7 @@ const createMovieIntoDB = async (payload: TMovie) => {
     if (isMoviesExists) {
         throw new AppError(StatusCodes.BAD_REQUEST, 'Movie already exists!');
     }
+
     const generatedSlug = MovieUtils.generateMovieSlug(payload);
     payload.slug = generatedSlug;
 
@@ -27,7 +28,7 @@ const getAllMoviesFromDB = async (query: Record<string, unknown>) => {
         .paginate()
         .sort()
         .fields();
-    const result = await MovieQueryModel.QueryModel;
+    const result = await MovieQueryModel.QueryModel.populate('genre');
     return result;
 };
 

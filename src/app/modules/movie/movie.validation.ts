@@ -5,7 +5,7 @@ const createMovieValidationSchema = z.object({
         title: z.string().max(200),
         description: z.string(),
         releaseDate: z.string().datetime(),
-        genre: z.string(),
+        genre: z.array(z.string()),
     }),
 });
 const updateMovieValidationSchema = z.object({
@@ -13,7 +13,7 @@ const updateMovieValidationSchema = z.object({
         title: z.string().max(200).optional(),
         description: z.string().optional(),
         releaseDate: z.string().datetime().optional(),
-        genre: z.string().optional(),
+        genre: z.array(z.string()),
     }),
 });
 

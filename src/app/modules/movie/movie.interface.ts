@@ -3,7 +3,7 @@ export type TMovie = {
     slug: string;
     description: string;
     releaseDate: Date | string;
-    genre: string;
+    genre: string[];
     isDeleted: boolean;
     viewCount: number;
     totalReviews: number;

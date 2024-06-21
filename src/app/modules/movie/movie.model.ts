@@ -19,10 +19,13 @@ const movieSchema = new Schema<TMovie>({
         type: Date,
         required: true,
     },
-    genre: {
-        type: String,
-        required: true,
-    },
+    genre: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Genre',
+            unique: true,
+        },
+    ],
     isDeleted: {
         type: Boolean,
         default: false,
