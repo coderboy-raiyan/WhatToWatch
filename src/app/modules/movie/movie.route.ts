@@ -6,6 +6,7 @@ import MovieValidations from './movie.validation';
 
 const router = Router();
 
+router.get('/search', MovieControllers.searchMovies);
 router.get('/', MovieControllers.getAllMovies);
 router.get('/:slug', MovieControllers.getSingleMovie);
 router.post(

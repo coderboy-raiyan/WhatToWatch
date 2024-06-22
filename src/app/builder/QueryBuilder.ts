@@ -25,9 +25,18 @@ class QueryBuilder<T> {
         return this;
     }
 
-    filter(excludeFields = ['searchTerm', 'page', 'limit', 'sort', 'fields']) {
+    filter(excludeFields: string[] = []) {
+        const permanentlyExcluded = [
+            'searchTerm',
+            'page',
+            'limit',
+            'sort',
+            'fields',
+            ...excludeFields,
+        ];
+
         const copyQueryObj = { ...this.query };
-        excludeFields.forEach((field) => delete copyQueryObj[field]);
+        permanentlyExcluded.forEach((field) => delete copyQueryObj[field]);
         this.QueryModel = this.QueryModel.find(copyQueryObj as FilterQuery<T>);
         return this;
     }

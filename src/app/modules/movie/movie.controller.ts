@@ -31,6 +31,16 @@ const getSingleMovie = catchAsyncError(async (req: Request, res: Response) => {
         data: result,
     });
 });
+const searchMovies = catchAsyncError(async (req: Request, res: Response) => {
+    const result = await MovieServices.searchMoviesFromDB(req.query);
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: 'Movies retrieved Successfully',
+        data: result,
+    });
+});
+
 const updateMovie = catchAsyncError(async (req: Request, res: Response) => {
     const result = await MovieServices.updateMovieIntoDB(req.params.id, req.body);
     sendResponse(res, {
@@ -56,6 +66,7 @@ const MovieControllers = {
     getSingleMovie,
     deleteMovie,
     updateMovie,
+    searchMovies,
 };
 
 export default MovieControllers;

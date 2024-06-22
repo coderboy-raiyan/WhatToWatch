@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
+import Genre from '../genre/genre.model';
 import { TMovie } from './movie.interface';
 import Movie from './movie.model';
 import MovieUtils from './movie.utils';
@@ -23,12 +24,14 @@ const createMovieIntoDB = async (payload: TMovie) => {
 
 const getAllMoviesFromDB = async (query: Record<string, unknown>) => {
     const MovieQueryModel = new QueryBuilder(Movie, query)
-        .search(['title', 'description', 'genre'])
-        .filter()
+        .search(['title', 'description'])
+        .filter(['genre'])
         .paginate()
         .sort()
         .fields();
-    const result = await MovieQueryModel.QueryModel.populate('genre');
+    const result = await MovieQueryModel.QueryModel.populate({
+        path: 'genre',
+    });
     return result;
 };
 
@@ -62,6 +65,26 @@ const updateMovieIntoDB = async (id: string, payload: Partial<TMovie>) => {
     return result;
 };
 
+const searchMoviesFromDB = async (query: Record<string, unknown>) => {
+    const modelQuery = new QueryBuilder(Movie, query)
+        .search(['title', 'description'])
+        .filter(['genre'])
+        .paginate()
+        .sort()
+        .fields();
+    if (query?.genre) {
+        const genres = await Genre.find(
+            { slug: { $regex: query?.genre, $options: 'i' } },
+            { _id: 1 }
+        );
+
+        modelQuery.QueryModel.find({ genre: { $in: genres } });
+    }
+
+    const result = await modelQuery.QueryModel.populate('genre');
+    return result;
+};
+
 const deleteMovieFromDB = async (id: string) => {
     const result = await Movie.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
     return result;
@@ -73,6 +96,7 @@ const MovieServices = {
     getSingleMovieFromDB,
     deleteMovieFromDB,
     updateMovieIntoDB,
+    searchMoviesFromDB,
 };
 
 export default MovieServices;
